@@ -9,6 +9,7 @@ SAXONJAR="/home/cam/usr/Saxon/saxon9he.jar"
 mkdir results
 mkdir tmp
 
+# 1. Get web pages and process to extract synonymy info
 # As of 2016-07-05, the highest node is 16045
 
 for i in $(seq 7177 7187)
@@ -27,3 +28,30 @@ do
 done
 
 rm -rf tmp
+
+# 2. Process 
+
+gawk 'BEGIN{
+  x = 1;
+  RS="\x04";
+  cmd = "ls -1 results";
+  cmd | getline filelist ;
+  close(cmd);
+  nfiles = split(filelist, file, "\n");
+  for (i = 1; i < nfiles; i++) {
+    print "file " file[i] > "/dev/stderr";
+    cmd = "cat results/" file[i];
+    cmd | getline text;
+    close(cmd)
+    gsub(/&amp;/,"&",text);
+    nlines = split(text, line, "\n");
+    accepted = x;
+    print accepted "|" line[1] "|A|\\N" ;
+    for (j = 3; j < nlines; j++) {
+      if (line[j] != "") {
+        print ++x "|" line[j] "|S|" accepted;
+      }
+    }
+    x++;
+  }
+}' > fm_syns.csv
