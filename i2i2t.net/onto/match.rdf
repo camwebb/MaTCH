@@ -45,7 +45,7 @@
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:match="http://w3id.org/i2i2t/match#">
-    <owl:Ontology rdf:about="http://w3id.org/i2i2t/match#">
+    <owl:Ontology rdf:about="http://w3id.org/i2i/match#">
         <rdfs:comment>MaTCH ontology. Statements about the similarity of biological individual organisms.</rdfs:comment>
     </owl:Ontology>
     
