@@ -1,0 +1,348 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY dcterms "http://purl.org/dc/terms/" >
+    <!ENTITY prov "http://www.w3.org/ns/prov#" >
+    <!ENTITY foaf "http://xmlns.com/foaf/0.1/" >
+    <!ENTITY dwciri "http://rs.tdwg.org/dwc/iri/" >
+    <!ENTITY match "http://w3id.org/i2i2t/match#" >
+    <!ENTITY dcmitype "http://purl.org/dc/dcmitype/" >
+    <!ENTITY dwc "http://rs.tdwg.org/dwc/terms/" >
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY obo "http://purl.obolibrary.org/obo/" >
+    <!ENTITY dwctype "http://rs.tdwg.org/dwc/dwctype/" >
+    <!ENTITY swrl "http://www.w3.org/2003/11/swrl#" >
+    <!ENTITY dc "http://purl.org/dc/elements/1.1/" >
+    <!ENTITY swrlb "http://www.w3.org/2003/11/swrlb#" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY tc "http://rs.tdwg.org/ontology/voc/TaxonConcept#" >
+    <!ENTITY protege "http://protege.stanford.edu/plugins/owl/protege#" >
+    <!ENTITY xsp "http://www.owl-ontologies.com/2005/08/07/xsp.owl#" >
+]>
+
+
+<rdf:RDF xmlns="http://purl.org/dsw/"
+     xml:base="http://purl.org/dsw/"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:prov="http://www.w3.org/ns/prov#"
+     xmlns:protege="http://protege.stanford.edu/plugins/owl/protege#"
+     xmlns:foaf="http://xmlns.com/foaf/0.1/"
+     xmlns:dwciri="http://rs.tdwg.org/dwc/iri/"
+     xmlns:xsp="http://www.owl-ontologies.com/2005/08/07/xsp.owl#"
+     xmlns:dwc="http://rs.tdwg.org/dwc/terms/"
+     xmlns:dcmitype="http://purl.org/dc/dcmitype/"
+     xmlns:dcterms="http://purl.org/dc/terms/"
+     xmlns:obo="http://purl.obolibrary.org/obo/"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:dwctype="http://rs.tdwg.org/dwc/dwctype/"
+     xmlns:swrl="http://www.w3.org/2003/11/swrl#"
+     xmlns:tc="http://rs.tdwg.org/ontology/voc/TaxonConcept#"
+     xmlns:swrlb="http://www.w3.org/2003/11/swrlb#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:match="http://w3id.org/i2i2t/match#">
+    <owl:Ontology rdf:about="http://w3id.org/i2i2t/match#">
+        <rdfs:comment>MaTCH ontology. Statements about the similarity of biological individual organisms.</rdfs:comment>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <owl:AnnotationProperty rdf:about="&dc;creator"/>
+    <owl:AnnotationProperty rdf:about="&owl;versionInfo"/>
+    <owl:AnnotationProperty rdf:about="&dc;date"/>
+    <owl:AnnotationProperty rdf:about="&dc;description"/>
+    <owl:AnnotationProperty rdf:about="&prov;inverse"/>
+    <owl:AnnotationProperty rdf:about="&rdfs;comment"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Datatypes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.w3.org/2001/XMLSchema#date -->
+
+    <rdfs:Datatype rdf:about="&xsd;date"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://purl.org/dc/terms/creator -->
+
+    <owl:ObjectProperty rdf:about="&dcterms;creator">
+        <rdfs:range rdf:resource="&foaf;Agent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://purl.org/dsw/hasIdentification -->
+
+    <owl:ObjectProperty rdf:about="http://purl.org/dsw/hasIdentification">
+        <rdfs:label xml:lang="en">Has Identification</rdfs:label>
+        <rdfs:comment xml:lang="en">Links a subject Organism instance to an object Identification instance.</rdfs:comment>
+        <dc:description xml:lang="en">The hasIdentification relationship is one-to-many (one individual organism has many identifications)</dc:description>
+        <dc:description xml:lang="en">Use the inverse property dsw:identifies in preference to this one if the link is made in only one direction.</dc:description>
+        <rdfs:isDefinedBy rdf:resource="http://purl.org/dsw/"/>
+        <owl:inverseOf rdf:resource="http://purl.org/dsw/identifies"/>
+        <rdfs:range rdf:resource="&dwc;Identification"/>
+        <rdfs:domain rdf:resource="&dwc;Organism"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://purl.org/dsw/identifies -->
+
+    <owl:ObjectProperty rdf:about="http://purl.org/dsw/identifies">
+        <rdfs:label xml:lang="en">Identifies</rdfs:label>
+        <rdfs:comment xml:lang="en">Links a subject Identification instance to an object Organism instance.</rdfs:comment>
+        <dc:description xml:lang="en">The identifies relationship is many-to-one (many identifications for one individual organism)</dc:description>
+        <dc:description xml:lang="en">This property is preferred over its inverse if the link is made in only one direction.</dc:description>
+        <prov:inverse>hasIdentification</prov:inverse>
+        <rdfs:isDefinedBy rdf:resource="http://purl.org/dsw/"/>
+        <rdfs:domain rdf:resource="&dwc;Identification"/>
+        <rdfs:range rdf:resource="&dwc;Organism"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://purl.org/dsw/taxonOfId -->
+
+    <owl:ObjectProperty rdf:about="http://purl.org/dsw/taxonOfId">
+        <rdfs:label xml:lang="en">Taxon Of ID</rdfs:label>
+        <rdfs:comment xml:lang="en">Links a subject Taxon instance to an object Identification instance.</rdfs:comment>
+        <dc:description xml:lang="en">The taxonOfID relationship is one-to-many (one taxon may be referenced in many identifications)</dc:description>
+        <dc:description xml:lang="en">Use the well-known dwciri:toTaxon predicate in preference to this one if the link is only made in one direction.</dc:description>
+        <rdfs:isDefinedBy rdf:resource="http://purl.org/dsw/"/>
+        <owl:inverseOf rdf:resource="&dwciri;toTaxon"/>
+        <rdfs:range rdf:resource="&dwc;Identification"/>
+        <rdfs:domain rdf:resource="&dwc;Taxon"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://rs.tdwg.org/dwc/iri/identifiedBy -->
+
+    <owl:ObjectProperty rdf:about="&dwciri;identifiedBy">
+        <rdfs:label xml:lang="en">Identified By</rdfs:label>
+        <dc:description xml:lang="en">Definition based on dwc:identifiedBy but modified to make it appropriate for non-literal values.</dc:description>
+        <rdfs:comment xml:lang="en">People, groups, or organizations who assigned the Taxon to the subject</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://rs.tdwg.org/dwc/iri/"/>
+        <rdfs:domain rdf:resource="&dwc;Identification"/>
+        <rdfs:range rdf:resource="&foaf;Agent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://rs.tdwg.org/dwc/iri/toTaxon -->
+
+    <owl:ObjectProperty rdf:about="&dwciri;toTaxon">
+        <rdfs:label xml:lang="en">To Taxon</rdfs:label>
+        <rdfs:comment xml:lang="en">Links a subject Identification instance to an object Taxon instance.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://rs.tdwg.org/dwc/iri/"/>
+        <rdfs:domain rdf:resource="&dwc;Identification"/>
+        <rdfs:range rdf:resource="&dwc;Taxon"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://w3id.org/i2i2t/match#hasMatch -->
+
+    <owl:ObjectProperty rdf:about="&match;hasMatch">
+        <rdfs:comment>Links an Organism to a Matching statement. Ususally only two Orgsnisms will be discussed in a single match.</rdfs:comment>
+        <rdfs:domain rdf:resource="&dwc;Organism"/>
+        <rdfs:range rdf:resource="&match;Match"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.w3.org/2002/07/owl#topObjectProperty -->
+
+    <owl:ObjectProperty rdf:about="&owl;topObjectProperty"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://purl.org/dc/terms/date -->
+
+    <owl:DatatypeProperty rdf:about="&dcterms;date"/>
+    
+
+
+    <!-- http://w3id.org/i2i2t/match#matchLevel -->
+
+    <owl:DatatypeProperty rdf:about="&match;matchLevel">
+        <rdfs:comment>A measure of the species similarity between two organisms, generally the morphological similarity. Incorporates both measurable structural similarity and a measure of the observers confidence in the match. A number between 0 and 1.0. Suggested meanings of the levels of this measure: 0.0 = definitely a different species; 0.3 = could be a member of an extremely variable species; 0.5 = probably the same species, but not sure; 0.7 = almost certainly the same species, but species quite variable; 0.8 = certainly a member of the same low  variability species; 0.9 = certainly a member of the same population, very few morphological differences; 1.0 = almost certainly (different parts of) the same individual, very hard to tell apart.</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.w3.org/2002/07/owl#topDataProperty -->
+
+    <owl:DatatypeProperty rdf:about="&owl;topDataProperty"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://rs.tdwg.org/dwc/terms/Identification -->
+
+    <owl:Class rdf:about="&dwc;Identification">
+        <rdfs:label xml:lang="en">Identification</rdfs:label>
+        <owl:disjointWith rdf:resource="&dwc;Organism"/>
+        <owl:disjointWith rdf:resource="&dwc;Taxon"/>
+        <owl:disjointWith rdf:resource="&foaf;Agent"/>
+        <rdfs:comment xml:lang="en">A taxonomic determination (e.g., the assignment to a taxon).</rdfs:comment>
+        <dc:description xml:lang="en">Definition taken from Darwin Core vocabulary 2014-11-21.</dc:description>
+        <rdfs:isDefinedBy rdf:resource="http://rs.tdwg.org/dwc/terms/"/>
+    </owl:Class>
+    
+
+
+    <!-- http://rs.tdwg.org/dwc/terms/Organism -->
+
+    <owl:Class rdf:about="&dwc;Organism">
+        <rdfs:label xml:lang="en">Organism</rdfs:label>
+        <owl:disjointWith rdf:resource="&dwc;Taxon"/>
+        <rdfs:comment xml:lang="en">A particular organism or defined group of organisms considered to be taxonomically homogeneous.</rdfs:comment>
+        <dc:description xml:lang="en">Definition taken from Darwin Core vocabulary 2014-11-21.  Replaces dsw:IndividualOrganism, which is now deprecated.</dc:description>
+        <rdfs:isDefinedBy rdf:resource="http://rs.tdwg.org/dwc/terms/"/>
+    </owl:Class>
+    
+
+
+    <!-- http://rs.tdwg.org/dwc/terms/Taxon -->
+
+    <owl:Class rdf:about="&dwc;Taxon">
+        <rdfs:label xml:lang="en">Taxon</rdfs:label>
+        <owl:disjointWith rdf:resource="&foaf;Agent"/>
+        <rdfs:comment xml:lang="en">A group of organisms (sensu http://purl.obolibrary.org/obo/OBI_0100026) considered by taxonomists to form a homogeneous unit.</rdfs:comment>
+        <dc:description xml:lang="en">Definition taken from Darwin Core vocabulary 2014-11-21.</dc:description>
+        <rdfs:isDefinedBy rdf:resource="http://rs.tdwg.org/dwc/terms/"/>
+    </owl:Class>
+    
+
+
+    <!-- http://w3id.org/i2i2t/match#Match -->
+
+    <owl:Class rdf:about="&match;Match">
+        <rdfs:comment>A statement of similarity between two organisms.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.w3.org/2002/07/owl#Thing -->
+
+    <owl:Class rdf:about="&owl;Thing"/>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/Agent -->
+
+    <owl:Class rdf:about="&foaf;Agent">
+        <rdfs:label xml:lang="en">Agent</rdfs:label>
+        <rdfs:comment xml:lang="en">An agent (eg. person, group, software or physical artifact).</rdfs:comment>
+        <dc:description xml:lang="en">Definition taken from FOAF vocabulary 2014-11-21. See also http://purl.org/dc/terms/Agent</dc:description>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://w3id.org/i2i2t/match#Match1 -->
+
+    <owl:NamedIndividual rdf:about="&match;Match1">
+        <rdf:type rdf:resource="&match;Match"/>
+        <match:matchLevel rdf:datatype="&xsd;decimal">0.7</match:matchLevel>
+        <dcterms:date rdf:datatype="&xsd;date">2016-07-12</dcterms:date>
+        <dcterms:creator rdf:resource="&match;Person1"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://w3id.org/i2i2t/match#Organism1 -->
+
+    <owl:NamedIndividual rdf:about="&match;Organism1">
+        <rdf:type rdf:resource="&dwc;Organism"/>
+        <match:hasMatch rdf:resource="&match;Match1"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://w3id.org/i2i2t/match#Organism2 -->
+
+    <owl:NamedIndividual rdf:about="&match;Organism2">
+        <rdf:type rdf:resource="&dwc;Organism"/>
+        <match:hasMatch rdf:resource="&match;Match1"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://w3id.org/i2i2t/match#Person1 -->
+
+    <foaf:Agent rdf:about="&match;Person1">
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+    </foaf:Agent>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 3.2.3.1824) http://owlapi.sourceforge.net -->
+

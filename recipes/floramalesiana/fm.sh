@@ -43,7 +43,7 @@ gawk 'BEGIN{
     cmd = "cat results/" file[i];
     cmd | getline text;
     close(cmd)
-    gsub(/&amp;/,"&",text);
+    gsub(/&amp;/,"\\&",text);
     nlines = split(text, line, "\n");
     accepted = x;
     print accepted "|" line[1] "|A|\\N" ;
@@ -55,3 +55,11 @@ gawk 'BEGIN{
     x++;
   }
 }' > fm_syns.csv
+
+rm -rf results
+
+# 3. Load data into MaTCH MySQL database:
+
+mysql -u myuser -pmypassword match < load_fm_syns.sql
+
+
