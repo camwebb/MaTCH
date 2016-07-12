@@ -3,6 +3,7 @@
 
 <!DOCTYPE rdf:RDF [
     <!ENTITY dcterms "http://purl.org/dc/terms/" >
+    <!ENTITY match2 "http://w3id.org/i2i/match#" >
     <!ENTITY prov "http://www.w3.org/ns/prov#" >
     <!ENTITY foaf "http://xmlns.com/foaf/0.1/" >
     <!ENTITY dwciri "http://rs.tdwg.org/dwc/iri/" >
@@ -29,8 +30,8 @@
      xmlns:dc="http://purl.org/dc/elements/1.1/"
      xmlns:prov="http://www.w3.org/ns/prov#"
      xmlns:protege="http://protege.stanford.edu/plugins/owl/protege#"
-     xmlns:foaf="http://xmlns.com/foaf/0.1/"
      xmlns:dwciri="http://rs.tdwg.org/dwc/iri/"
+     xmlns:foaf="http://xmlns.com/foaf/0.1/"
      xmlns:xsp="http://www.owl-ontologies.com/2005/08/07/xsp.owl#"
      xmlns:dwc="http://rs.tdwg.org/dwc/terms/"
      xmlns:dcmitype="http://purl.org/dc/dcmitype/"
@@ -44,6 +45,7 @@
      xmlns:owl="http://www.w3.org/2002/07/owl#"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:match2="http://w3id.org/i2i/match#"
      xmlns:match="http://w3id.org/i2i2t/match#">
     <owl:Ontology rdf:about="http://w3id.org/i2i/match#">
         <rdfs:comment>MaTCH ontology. Statements about the similarity of biological individual organisms.</rdfs:comment>
@@ -207,9 +209,18 @@
     
 
 
-    <!-- http://w3id.org/i2i2t/match#matchLevel -->
+    <!-- http://w3id.org/i2i/match#confidence -->
 
-    <owl:DatatypeProperty rdf:about="&match;matchLevel">
+    <owl:DatatypeProperty rdf:about="&match2;confidence">
+        <rdfs:comment>The confidence that the Agent has has in the determination given. A decimal number between 0 and 1.0. 1.0 indicated a very high confidence in both ones understanding of the Taxon Concept, and of the determination of the organism to the at concept. 0.5 is &#39;medium&#39; confidence. Values &lt; 0.5 indicate low confidence.</rdfs:comment>
+        <rdfs:domain rdf:resource="&dwc;Identification"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://w3id.org/i2i2t/match#similarity -->
+
+    <owl:DatatypeProperty rdf:about="&match;similarity">
         <rdfs:comment>A measure of the species similarity between two organisms, generally the morphological similarity. Incorporates both measurable structural similarity and a measure of the observers confidence in the match. A number between 0 and 1.0. Suggested meanings of the levels of this measure: 0.0 = definitely a different species; 0.3 = could be a member of an extremely variable species; 0.5 = probably the same species, but not sure; 0.7 = almost certainly the same species, but species quite variable; 0.8 = certainly a member of the same low  variability species; 0.9 = certainly a member of the same population, very few morphological differences; 1.0 = almost certainly (different parts of) the same individual, very hard to tell apart.</rdfs:comment>
     </owl:DatatypeProperty>
     
@@ -310,7 +321,7 @@
 
     <owl:NamedIndividual rdf:about="&match;Match1">
         <rdf:type rdf:resource="&match;Match"/>
-        <match:matchLevel rdf:datatype="&xsd;decimal">0.7</match:matchLevel>
+        <match:similarity rdf:datatype="&xsd;decimal">0.7</match:similarity>
         <dcterms:date rdf:datatype="&xsd;date">2016-07-12</dcterms:date>
         <dcterms:creator rdf:resource="&match;Person1"/>
     </owl:NamedIndividual>
