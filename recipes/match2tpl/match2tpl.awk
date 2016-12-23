@@ -39,8 +39,8 @@ BEGIN{
 
   print "Reading your names list..." > "/dev/stderr";  
   while ((getline < IN) > 0) {
-    # INdata[++inputorder] = $0;
-    INcode[++inputorder] = $IN_code ;
+    INdata[++inputorder] = $0;
+    INcode[inputorder] = $IN_code ;
     INg[inputorder] = $IN_g ;
     INgsaStr[inputorder] = $IN_xg " " $IN_g " " $IN_xs " " $IN_s " " \
       $IN_st " " $IN_ssp " " $IN_a ;
@@ -65,6 +65,41 @@ BEGIN{
   }
   print "  Done.\n" > "/dev/stderr";
 
+  # --------------------------------------------------------------
+
+  # STEP 6.
+
+  cmd = "test -e names.manual.EDITED.csv ; echo $?";
+  cmd | getline test1;
+  close(cmd);
+  cmd = "test -e names.simplematch.csv ; echo $?";
+  cmd | getline test2;
+  close(cmd);
+  if ((test1 == "0") && (test2 == "0")) {
+
+    while ((getline < "names.simplematch.csv") > 0) {
+      resultPL[$1] = $2;
+      status[$1] = "gsa";
+    }
+    while ((getline < "names.manual.EDITED.csv") > 0) {
+      if ($5 == 1) {
+        resultPL[$1] = $4;
+        status[$1] = "manual";
+      }
+    }
+
+    for (i = 1 ; i <= inputorder ; i++) {
+
+      if (PLsyn[resultPL[INcode[i]]]) final[i] = PLsyn[resultPL[INcode[i]]];
+      else final[i] = resultPL[INcode[i]];
+
+      print INdata[i], status[INcode[i]], PLdata[resultPL[INcode[i]]], PLdata[final[i]];
+    }
+    exit;
+  }
+
+  # --------------------------------------------------------------
+  
   # STEP 2. try simple matching
   print "Simple matching..." > "/dev/stderr";
   for (i = 1 ; i <= inputorder ; i++) {
@@ -90,7 +125,7 @@ BEGIN{
 
   # STEP 4. try agrep matching on species name
   for (i = 1 ; i <= inputorder ; i++) {
-    if (!INmatched[i]) {
+    if (!INmatched[i] && (!INgNotPL[INg[i]])) {
       cmd = "agrep -k -2 '" INgsakey[i] "' tmp_genera/" INg[i] ".csv";
       agreps = "";
       RS = "\x04";
@@ -108,10 +143,7 @@ BEGIN{
     }
   }
 
-  
-    
-    
-
+  # STEP 5. Manually edit "names.manual.csv"
   
   exit;
 }
